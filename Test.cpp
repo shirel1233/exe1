@@ -2,6 +2,8 @@
 //cohen.shirel098@gmail.com
 #include "doctest.h"
 #include "Algorithms.hpp"
+#include <climits> 
+
 
 using namespace std;
 
@@ -80,8 +82,6 @@ TEST_CASE("Test shortestPath") {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
-
-        
     g.loadGraph(graph2);
 
     // Test with weighted edges and directed graph
@@ -210,10 +210,6 @@ TEST_CASE("Test isBipartite") {
 
 };
 
-
-
-
-
 TEST_CASE("Test negativeCycle") {
     ariel::Graph g;
 
@@ -227,15 +223,60 @@ TEST_CASE("Test negativeCycle") {
     g.loadGraph(graph1);
     CHECK(ariel::Algorithms::negativeCycle(g) == vector<int>{});
 
-    vector<vector<int>> graph4 = {
+    vector<vector<int>> graph2 = {
+        {0, 0, 8, 0, 0},
+        {0, 7, 0, 0, 0},
         {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0},
+        {6, 0, 0, 0, 0},
         {0, 0, 0, 0, 0}};
-    g.loadGraph(graph4);
+    g.loadGraph(graph2);
     CHECK(ariel::Algorithms::negativeCycle(g) == vector<int>{});
+    
+    // Case 3: Graph with a 2 negative cycle
+    std::vector<vector<int>> graph3 = {
+        {0, 1, 4, 0, 0},
+        {0, 0, -2, 0, 0},
+        {0, 0, 0, -1, 0},
+        {0, 0, 0, 0, -3},
+        {-1, 0, 0, 0, 0}};
+    g.loadGraph(graph3);
+    //auto result3 = ariel::Algorithms::negativeCycle(g);
+    std::vector<int> expected_cycle3 = {1, 2, 3, 4, 0, 1};  // Example of an expected negative cycle
+    CHECK(ariel::Algorithms::negativeCycle(g) == expected_cycle3);
+
+    // Case 4: Another graph with a negative cycle
+    vector<vector<int>> graph7 = {
+        {0, 5, 0, 0 },
+        {0, 0, 1, 0},
+        {0, 0, 0, 2},
+        {0, -4, 0, 0 }};
+    g.loadGraph(graph7);
+    auto result4 = ariel::Algorithms::negativeCycle(g);
+    std::vector<int> expected_cycle4 = {1,2,3,1};  // Example of an expected negative cycle
+    CHECK(result4 == expected_cycle4);
+
+    // Additional test case: Graph with a clear negative cycle
+    std::vector<std::vector<int>> graph5 = {
+        {0, 1, 0, 0},
+        {0, 0, -2, 0},
+        {0, 0, 0, -1},
+        {-3, 0, 0, 0}};
+    g.loadGraph(graph5);
+    vector<int> result5 = ariel::Algorithms::negativeCycle(g);
+    std::vector<int> expected_cycle5 = {1, 2, 3, 0, 1};  // Example of an expected negative cycle
+    CHECK(result5 == expected_cycle5);
+
+    std::vector<std::vector<int>> graph6 = {
+        {0, 1, 0, -3},
+        {1, 0, -2, 0},
+        {0, -2, 0, -1},
+        {-3, 0, -1, 0}};
+    g.loadGraph(graph6);
+    vector<int> result6 = ariel::Algorithms::negativeCycle(g);
+    std::vector<int> expected_cycle6 = {1, 2, 3, 0, 1};  // Example of an expected negative cycle
+    CHECK(result5 == expected_cycle6);
 }
+
 
 
 TEST_CASE("Test invalid graph")
@@ -249,3 +290,5 @@ TEST_CASE("Test invalid graph")
         {0, 0, 0, 5}};
     CHECK_THROWS(g.loadGraph(graph));
 }
+
+

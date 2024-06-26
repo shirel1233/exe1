@@ -21,7 +21,8 @@ int main()
         {0, 1, 0}};
     g.loadGraph(graph); // Load the graph to the object.
 
-    g.printGraph();                                    // Should print: "Graph with 3 vertices and 4 edges."
+    g.printGraph(); 
+    //cout << "isConnected(g)" << endl;                                   // Should print: "Graph with 3 vertices and 4 edges."
     cout << Algorithms::isConnected(g) << endl;        // Should print: "1" (true).
     vector<int> shortestPath = Algorithms::shortestPath(g, 0, 2);// Should print: {0,1,2}.
         cout << "Shortest path : {";
@@ -137,5 +138,5 @@ int main()
     catch (const std::invalid_argument &e)
     {
         cout << e.what() << endl; // Should print: "Invalid graph: The graph is not a square matrix."
-    }
+    } 
 };
