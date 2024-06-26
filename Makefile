@@ -1,8 +1,6 @@
-#!make -f
-
-CXX=clang
-CXXFLAGS=-std=c++14 -Werror -Wsign-conversion
-VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
+CXX=clang++
+CXXFLAGS=-std=c++11 -Werror -Wsign-conversion
+VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all --error-exitcode=99 
 .PHONY: clean run tidy valgrind
 
 SOURCES=Graph.cpp Algorithms.cpp 
